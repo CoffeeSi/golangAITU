@@ -100,6 +100,8 @@ func (library *Library) ConsoleMenu() {
 			library.ListAvailableBooks()
 		case "0":
 			return
+		default:
+			fmt.Println("Invalid number of operation!")
 		}
 	}
 }
