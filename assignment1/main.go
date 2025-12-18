@@ -6,6 +6,8 @@ import (
 	"github.com/CoffeeSi/golangAITU/assignment1/Library"
 	"github.com/CoffeeSi/golangAITU/assignment1/Shapes"
   "github.com/CoffeeSi/golangAITU/assignment1/Company"
+  "github.com/CoffeeSi/golangAITU/assignment1/Bank"
+  
 )
 
 func main() {
@@ -54,4 +56,12 @@ func main() {
 	google.AddEmployee(employee)
 	google.AddEmployee(employee2)
 	google.ListEmployees()
+  
+  account := Bank.BankAccount{
+		Name:          "Yevgeniy",
+		AccountNumber: 12345678,
+		Money:         0,
+		Transactions:  []string{},
+	}
+	account.ConsoleMenu()
 }
