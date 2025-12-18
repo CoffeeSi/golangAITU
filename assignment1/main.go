@@ -7,8 +7,8 @@ import (
 )
 
 func main() {
-	// library := new(Library.Library)
-	// library.ConsoleMenu()
+// 	library := new(Library.Library)
+// 	library.ConsoleMenu()
 
 	rectangle := Shapes.Rectangle{
 		A: 4,
@@ -31,4 +31,10 @@ func main() {
 	for _, shape := range shapes {
 		fmt.Printf("Area = %v; Perimetr = %v\n", shape.CalculateArea(), shape.CalculatePerimetr())
 	}
+	"github.com/CoffeeSi/golangAITU/assignment1/Library"
+)
+
+func main() {
+	library := new(Library.Library)
+	library.ConsoleMenu()
 }
