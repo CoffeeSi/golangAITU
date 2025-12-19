@@ -53,15 +53,16 @@ func (library *Library) ListAvailableBooks() {
 		fmt.Println("The library is empty!")
 		return
 	}
+	fmt.Println("List of books:")
 	for _, book := range library.Books {
-		fmt.Printf("ID: %v, Title: %s, Author: %s, IsBorrowed: %t\n", book.ID, book.Title, book.Author, book.IsBorrowed)
+		fmt.Printf("ID: %s, Title: %s, Author: %s, IsBorrowed: %t\n", book.ID, book.Title, book.Author, book.IsBorrowed)
 	}
 }
 
 func (library *Library) ConsoleMenu() {
 	var scanner = bufio.NewScanner(os.Stdin)
 	scanner.Scan()
-	var id uint64 = 0
+	var id int = 0
 	for {
 		fmt.Print("\nInput operation:\n 1. Add book\n 2. Borrow book\n 3. Return book \n 4. List available books \n 0. Exit\n: ")
 		if !scanner.Scan() {
@@ -78,7 +79,7 @@ func (library *Library) ConsoleMenu() {
 			scanner.Scan()
 			author = scanner.Text()
 			newBook := Book{
-				ID:         string(id),
+				ID:         fmt.Sprint(id),
 				Title:      title,
 				Author:     author,
 				IsBorrowed: false,
@@ -90,7 +91,7 @@ func (library *Library) ConsoleMenu() {
 			fmt.Print("ID of book to borrow: ")
 			scanner.Scan()
 			bookId, _ = strconv.ParseUint(scanner.Text(), 10, 64)
-			book, exists := library.Books[string(bookId)]
+			book, exists := library.Books[fmt.Sprint(bookId)]
 			if !exists {
 				fmt.Println("Book does not exist")
 				continue
@@ -101,7 +102,7 @@ func (library *Library) ConsoleMenu() {
 			fmt.Print("ID of book to return: ")
 			scanner.Scan()
 			bookId, _ = strconv.ParseUint(scanner.Text(), 10, 64)
-			book := library.Books[string(bookId)]
+			book := library.Books[fmt.Sprint(bookId)]
 			library.ReturnBook(book)
 		case "4":
 			library.ListAvailableBooks()
