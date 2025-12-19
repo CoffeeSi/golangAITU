@@ -8,19 +8,19 @@ import (
 )
 
 type Book struct {
-	ID         uint64
+	ID         string
 	Title      string
 	Author     string
 	IsBorrowed bool
 }
 
 type Library struct {
-	Books map[uint64]Book
+	Books map[string]Book
 }
 
 func (library *Library) AddBook(book Book) {
 	if library.Books == nil {
-		library.Books = make(map[uint64]Book)
+		library.Books = make(map[string]Book)
 	}
 	library.Books[book.ID] = book
 	fmt.Printf("Book %s successfully added!\n", book.Title)
@@ -53,8 +53,8 @@ func (library *Library) ListAvailableBooks() {
 		fmt.Println("The library is empty!")
 		return
 	}
-	for i, book := range library.Books {
-		fmt.Printf("%v. ID: %v, Title: %s, Author: %s, IsBorrowed: %t\n", i+1, book.ID, book.Title, book.Author, book.IsBorrowed)
+	for _, book := range library.Books {
+		fmt.Printf("ID: %v, Title: %s, Author: %s, IsBorrowed: %t\n", book.ID, book.Title, book.Author, book.IsBorrowed)
 	}
 }
 
@@ -78,7 +78,7 @@ func (library *Library) ConsoleMenu() {
 			scanner.Scan()
 			author = scanner.Text()
 			newBook := Book{
-				ID:         id,
+				ID:         string(id),
 				Title:      title,
 				Author:     author,
 				IsBorrowed: false,
@@ -90,7 +90,7 @@ func (library *Library) ConsoleMenu() {
 			fmt.Print("ID of book to borrow: ")
 			scanner.Scan()
 			bookId, _ = strconv.ParseUint(scanner.Text(), 10, 64)
-			book, exists := library.Books[bookId]
+			book, exists := library.Books[string(bookId)]
 			if !exists {
 				fmt.Println("Book does not exist")
 				continue
@@ -101,7 +101,7 @@ func (library *Library) ConsoleMenu() {
 			fmt.Print("ID of book to return: ")
 			scanner.Scan()
 			bookId, _ = strconv.ParseUint(scanner.Text(), 10, 64)
-			book := library.Books[bookId]
+			book := library.Books[string(bookId)]
 			library.ReturnBook(book)
 		case "4":
 			library.ListAvailableBooks()
