@@ -15,10 +15,12 @@ type Book struct {
 }
 
 type Library struct {
+	id    uint64
 	Books map[string]Book
 }
 
 func (library *Library) AddBook(book Book) {
+	fmt.Print(library.Books)
 	if library.Books == nil {
 		library.Books = make(map[string]Book)
 	}
@@ -62,7 +64,7 @@ func (library *Library) ListAvailableBooks() {
 func (library *Library) ConsoleMenu() {
 	var scanner = bufio.NewScanner(os.Stdin)
 	scanner.Scan()
-	var id int = 0
+	var id *uint64 = &library.id
 	for {
 		fmt.Print("\nInput operation:\n 1. Add book\n 2. Borrow book\n 3. Return book \n 4. List available books \n 0. Exit\n: ")
 		if !scanner.Scan() {
@@ -79,12 +81,12 @@ func (library *Library) ConsoleMenu() {
 			scanner.Scan()
 			author = scanner.Text()
 			newBook := Book{
-				ID:         fmt.Sprint(id),
+				ID:         fmt.Sprint(*id),
 				Title:      title,
 				Author:     author,
 				IsBorrowed: false,
 			}
-			id++
+			*id++
 			library.AddBook(newBook)
 		case "2":
 			var bookId uint64
