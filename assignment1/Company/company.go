@@ -4,6 +4,7 @@ import "fmt"
 
 type Employee interface {
 	GetDetails()
+	GetId() uint64
 }
 
 type FullTimeEmployee struct {
@@ -32,6 +33,13 @@ func (e FullTimeEmployee) GetDetails() {
 		e.ID, e.FirstName, e.LastName, e.Position, e.Salary)
 }
 
+func (e FullTimeEmployee) GetId() uint64 {
+	return e.ID
+}
+func (e PartTimeEmployee) GetId() uint64 {
+	return e.ID
+}
+
 func (e PartTimeEmployee) GetDetails() {
 	fmt.Printf("ID: %v, Name: %s %s, Position: %s, Salary: %v tg, Shifts: %v\n",
 		e.ID, e.FirstName, e.LastName, e.Position, e.Salary, e.Shifts)
@@ -42,13 +50,7 @@ func (company *Company) AddEmployee(employee Employee) {
 		company.employees = make(map[uint64]Employee)
 	}
 
-	var id uint64
-	switch e := employee.(type) {
-	case FullTimeEmployee:
-		id = e.ID
-	case PartTimeEmployee:
-		id = e.ID
-	}
+	var id uint64 = employee.GetId()
 
 	if company.employees[id] != nil {
 		fmt.Printf("Employee with ID=%v already exists\n", id)
